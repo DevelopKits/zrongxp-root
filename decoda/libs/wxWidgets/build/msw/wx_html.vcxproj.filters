@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common Sources">
+      <UniqueIdentifier>{3bff973c-c6a3-4bc8-be9d-4640685f1127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MSW Sources">
+      <UniqueIdentifier>{9f0f7cd3-7b51-40d0-b268-5555a25bdd95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generic Sources">
+      <UniqueIdentifier>{bc2277d4-806d-4f5c-b77d-06d669989b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wxHTML Sources">
+      <UniqueIdentifier>{b25bc42d-e8e8-40b4-aa81-cf11941d8295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Setup Headers">
+      <UniqueIdentifier>{20194ff2-815a-4770-9fe0-06c6ca4313c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MSW Headers">
+      <UniqueIdentifier>{71923d9d-441b-4f02-8fd8-57a3bba3a4b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wxHTML Headers">
+      <UniqueIdentifier>{6eb13a2c-2a20-46fe-8fe7-db20922b4409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common Headers">
+      <UniqueIdentifier>{b20781d2-4a81-4e00-a039-091efbe45e82}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\common\dummy.cpp">
+      <Filter>Common Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\msw\helpbest.cpp">
+      <Filter>MSW Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\generic\htmllbox.cpp">
+      <Filter>Generic Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\helpctrl.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\helpdata.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\helpdlg.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\helpfrm.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\helpwnd.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\htmlcell.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\htmlfilt.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\htmlpars.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\htmltag.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\htmlwin.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\htmprint.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_dflist.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_fonts.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_hline.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_image.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_layout.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_links.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_list.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_pre.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_style.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\m_tables.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\html\winpars.cpp">
+      <Filter>wxHTML Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\msw\version.rc">
+      <Filter>MSW Sources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\wx\msw\helpbest.h">
+      <Filter>MSW Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\helpctrl.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\helpdata.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\helpdlg.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\helpfrm.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\helpwnd.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmlcell.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmldefs.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmlfilt.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmlpars.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmlproc.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmltag.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmlwin.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\htmprint.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\m_templ.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\html\winpars.h">
+      <Filter>wxHTML Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\htmllbox.h">
+      <Filter>Common Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\wx\wxhtml.h">
+      <Filter>Common Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\include\wx\univ\setup.h">
+      <Filter>Setup Headers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\include\wx\msw\setup.h">
+      <Filter>Setup Headers</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\include\wx\msw\genrcdefs.h">
+      <Filter>MSW Headers</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
