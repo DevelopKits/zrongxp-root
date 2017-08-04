@@ -458,7 +458,7 @@ bool CodeEdit::GetHoverText(int position, wxString& result)
 
 bool CodeEdit::GetIsIdentifierChar(char c) const
 {
-    return isalnum(c) || c == '_';
+    return c > 0 && (isalnum(c) || c == '_');
 }
 
 void CodeEdit::ShowToolTip(int position, const wxString& text)
@@ -626,10 +626,10 @@ bool CodeEdit::GetTokenFromPosition(int position, const wxString& joiners, wxStr
 
         wxString text = GetLine(LineFromPosition(position));
 
-        if (!isalnum(text[seek]) && joiners.Find(text[seek]) == wxNOT_FOUND)
-        {
-            return false;
-        }
+        //if (!isalnum(text[seek]) && joiners.Find(text[seek]) == wxNOT_FOUND)
+        //{
+        //    return false;
+        //}
         
         // Search from the seek point to the left until we hit a non-alphanumeric which isn't a "."
         // "." must be handled specially so that expressions like player.health are easy to evaluate. 

@@ -175,6 +175,7 @@
     <ClInclude Include="..\src\Frontend\WatchCtrl.h" />
     <ClInclude Include="..\src\Frontend\WatchDropTarget.h" />
     <ClInclude Include="..\src\Frontend\WatchWindow.h" />
+    <ClInclude Include="..\src\Frontend\Xml.h" />
     <ClInclude Include="..\src\Frontend\XmlConfig.h" />
     <ClInclude Include="..\src\Frontend\XmlUtility.h" />
   </ItemGroup>
@@ -305,6 +306,7 @@
     </ClCompile>
     <ClCompile Include="..\src\Frontend\WatchWindow.cpp">
     </ClCompile>
+    <ClCompile Include="..\src\Frontend\Xml.cpp" />
     <ClCompile Include="..\src\Frontend\XmlConfig.cpp">
     </ClCompile>
     <ClCompile Include="..\src\Frontend\XmlUtility.cpp">

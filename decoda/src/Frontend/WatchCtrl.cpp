@@ -27,6 +27,8 @@ along with Decoda.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <wx/sstream.h>
 #include <wx/xml/xml.h>
+#include <atlstr.h>
+#include "Xml.h"
 
 BEGIN_EVENT_TABLE(WatchCtrl, wxTreeListCtrl)
     EVT_SIZE(                               WatchCtrl::OnSize)
@@ -280,8 +282,30 @@ void WatchCtrl::UpdateItem(wxTreeItemId item)
             }
             else
             {
-                SetItemText(item, 1, "Improperly formatted XML data");
-                SetItemText(item, 2, "");
+				CStringW resultW = result;
+				CxXml2 xml;
+				if(xml.LoadXML(resultW))
+				{
+					IXMLDOMNode *pNode = xml.GetNode(L"value/type");
+					if(pNode != NULL)
+					{
+						CStringA type = xml.GetText(pNode);
+						SetItemText(item, 2, (LPCSTR)type);
+						pNode->Release();
+					}
+					pNode = xml.GetNode(L"value/data");
+					if(pNode != NULL)
+					{
+						CStringA value = xml.GetText(pNode);
+						SetItemText(item, 1, (LPCSTR)value);
+						pNode->Release();
+					}
+				}
+				else
+				{
+					SetItemText(item, 1, "Improperly formatted XML data");
+					SetItemText(item, 2, "");
+				}
             }
     
         }
