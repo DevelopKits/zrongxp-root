@@ -26,9 +26,10 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QPushButton *pushButton;
-    QLineEdit *lineEdit_2;
-    QLineEdit *lineEdit;
+    QPushButton *_btn_utf;
+    QLineEdit *_edit_result;
+    QLineEdit *_edit_src;
+    QPushButton *_btn_utf16;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -51,27 +52,32 @@ public:
         MainWindow->setDockOptions(QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(20, 70, 41, 31));
-        pushButton->setIconSize(QSize(32, 32));
-        pushButton->setCheckable(true);
-        pushButton->setChecked(true);
-        pushButton->setAutoRepeat(true);
-        pushButton->setAutoExclusive(true);
-        pushButton->setFlat(false);
-        lineEdit_2 = new QLineEdit(centralWidget);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-        lineEdit_2->setGeometry(QRect(20, 40, 351, 20));
-        lineEdit_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(20, 10, 351, 20));
+        _btn_utf = new QPushButton(centralWidget);
+        _btn_utf->setObjectName(QStringLiteral("_btn_utf"));
+        _btn_utf->setGeometry(QRect(20, 70, 41, 31));
+        _btn_utf->setIconSize(QSize(32, 32));
+        _btn_utf->setCheckable(true);
+        _btn_utf->setChecked(true);
+        _btn_utf->setAutoRepeat(true);
+        _btn_utf->setAutoExclusive(true);
+        _btn_utf->setFlat(false);
+        _edit_result = new QLineEdit(centralWidget);
+        _edit_result->setObjectName(QStringLiteral("_edit_result"));
+        _edit_result->setGeometry(QRect(20, 40, 351, 20));
+        _edit_result->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        _edit_src = new QLineEdit(centralWidget);
+        _edit_src->setObjectName(QStringLiteral("_edit_src"));
+        _edit_src->setGeometry(QRect(20, 10, 351, 20));
+        _btn_utf16 = new QPushButton(centralWidget);
+        _btn_utf16->setObjectName(QStringLiteral("_btn_utf16"));
+        _btn_utf16->setGeometry(QRect(70, 70, 41, 31));
+        _btn_utf16->setIconSize(QSize(32, 32));
+        _btn_utf16->setCheckable(true);
+        _btn_utf16->setChecked(true);
+        _btn_utf16->setAutoRepeat(true);
+        _btn_utf16->setAutoExclusive(true);
+        _btn_utf16->setFlat(false);
         MainWindow->setCentralWidget(centralWidget);
-        pushButton->raise();
-        lineEdit->raise();
-        lineEdit_2->raise();
-        lineEdit->raise();
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -84,7 +90,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        pushButton->setText(QApplication::translate("MainWindow", "ok", Q_NULLPTR));
+        _btn_utf->setText(QApplication::translate("MainWindow", "utf8", Q_NULLPTR));
+        _btn_utf16->setText(QApplication::translate("MainWindow", "utf16", Q_NULLPTR));
     } // retranslateUi
 
 };
