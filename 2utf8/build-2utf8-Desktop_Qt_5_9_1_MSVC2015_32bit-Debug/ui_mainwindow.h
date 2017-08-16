@@ -26,10 +26,13 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QPushButton *_btn_utf;
+    QPushButton *_btn_2utf8;
     QLineEdit *_edit_result;
     QLineEdit *_edit_src;
+    QPushButton *_btn_2utf16;
+    QPushButton *_btn_utf8;
     QPushButton *_btn_utf16;
+    QPushButton *_btn_clear;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -52,15 +55,15 @@ public:
         MainWindow->setDockOptions(QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        _btn_utf = new QPushButton(centralWidget);
-        _btn_utf->setObjectName(QStringLiteral("_btn_utf"));
-        _btn_utf->setGeometry(QRect(20, 70, 41, 31));
-        _btn_utf->setIconSize(QSize(32, 32));
-        _btn_utf->setCheckable(true);
-        _btn_utf->setChecked(true);
-        _btn_utf->setAutoRepeat(true);
-        _btn_utf->setAutoExclusive(true);
-        _btn_utf->setFlat(false);
+        _btn_2utf8 = new QPushButton(centralWidget);
+        _btn_2utf8->setObjectName(QStringLiteral("_btn_2utf8"));
+        _btn_2utf8->setGeometry(QRect(20, 70, 51, 31));
+        _btn_2utf8->setIconSize(QSize(32, 32));
+        _btn_2utf8->setCheckable(true);
+        _btn_2utf8->setChecked(true);
+        _btn_2utf8->setAutoRepeat(true);
+        _btn_2utf8->setAutoExclusive(true);
+        _btn_2utf8->setFlat(false);
         _edit_result = new QLineEdit(centralWidget);
         _edit_result->setObjectName(QStringLiteral("_edit_result"));
         _edit_result->setGeometry(QRect(20, 40, 351, 20));
@@ -68,15 +71,42 @@ public:
         _edit_src = new QLineEdit(centralWidget);
         _edit_src->setObjectName(QStringLiteral("_edit_src"));
         _edit_src->setGeometry(QRect(20, 10, 351, 20));
+        _btn_2utf16 = new QPushButton(centralWidget);
+        _btn_2utf16->setObjectName(QStringLiteral("_btn_2utf16"));
+        _btn_2utf16->setGeometry(QRect(140, 70, 51, 31));
+        _btn_2utf16->setIconSize(QSize(32, 32));
+        _btn_2utf16->setCheckable(true);
+        _btn_2utf16->setChecked(true);
+        _btn_2utf16->setAutoRepeat(true);
+        _btn_2utf16->setAutoExclusive(true);
+        _btn_2utf16->setFlat(false);
+        _btn_utf8 = new QPushButton(centralWidget);
+        _btn_utf8->setObjectName(QStringLiteral("_btn_utf8"));
+        _btn_utf8->setGeometry(QRect(80, 70, 51, 31));
+        _btn_utf8->setIconSize(QSize(32, 32));
+        _btn_utf8->setCheckable(true);
+        _btn_utf8->setChecked(true);
+        _btn_utf8->setAutoRepeat(true);
+        _btn_utf8->setAutoExclusive(true);
+        _btn_utf8->setFlat(false);
         _btn_utf16 = new QPushButton(centralWidget);
         _btn_utf16->setObjectName(QStringLiteral("_btn_utf16"));
-        _btn_utf16->setGeometry(QRect(70, 70, 41, 31));
+        _btn_utf16->setGeometry(QRect(200, 70, 51, 31));
         _btn_utf16->setIconSize(QSize(32, 32));
         _btn_utf16->setCheckable(true);
         _btn_utf16->setChecked(true);
         _btn_utf16->setAutoRepeat(true);
         _btn_utf16->setAutoExclusive(true);
         _btn_utf16->setFlat(false);
+        _btn_clear = new QPushButton(centralWidget);
+        _btn_clear->setObjectName(QStringLiteral("_btn_clear"));
+        _btn_clear->setGeometry(QRect(260, 70, 51, 31));
+        _btn_clear->setIconSize(QSize(32, 32));
+        _btn_clear->setCheckable(true);
+        _btn_clear->setChecked(true);
+        _btn_clear->setAutoRepeat(true);
+        _btn_clear->setAutoExclusive(true);
+        _btn_clear->setFlat(false);
         MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -90,8 +120,11 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        _btn_utf->setText(QApplication::translate("MainWindow", "utf8", Q_NULLPTR));
-        _btn_utf16->setText(QApplication::translate("MainWindow", "utf16", Q_NULLPTR));
+        _btn_2utf8->setText(QApplication::translate("MainWindow", "->utf8", Q_NULLPTR));
+        _btn_2utf16->setText(QApplication::translate("MainWindow", "->utf16", Q_NULLPTR));
+        _btn_utf8->setText(QApplication::translate("MainWindow", "<-utf8", Q_NULLPTR));
+        _btn_utf16->setText(QApplication::translate("MainWindow", "<-utf16", Q_NULLPTR));
+        _btn_clear->setText(QApplication::translate("MainWindow", "clear", Q_NULLPTR));
     } // retranslateUi
 
 };
