@@ -19,6 +19,9 @@ void MainWindow::on__btn_utf16_clicked()
 	{
 		return;
 	}
+
+	//ui->_btn_clear->
+
 	QLineEdit *psrc = ui->_edit_src;
 	QString str;
 	char io[17] = { 0 };

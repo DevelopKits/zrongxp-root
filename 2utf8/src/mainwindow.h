@@ -2,10 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <qpushbutton.h>
 
 namespace Ui {
 class MainWindow;
 }
+
+class abc : public QPushButton
+{
+
+};
 
 class MainWindow : public QMainWindow
 {
