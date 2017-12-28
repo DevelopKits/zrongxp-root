@@ -55,7 +55,6 @@ DWORD CThread::CreateThread(DWORD dwCreateFlags, UINT nStackSize, LPSECURITY_ATT
 
 BOOL CThread::OnInit()
 {
-	convert(m_strFolder, m_uiThreadID);
 	return TRUE;
 }
 
@@ -75,6 +74,10 @@ void CThread::OnThreadRun()
 					return ;
 				}
 			}
+			if (msg.message == WM_USER + 1001)
+			{
+				RunTask(msg.wParam);
+			}
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
@@ -93,6 +96,21 @@ void CThread::OnThreadRun()
     }
 }
 
+void CThread::RunTask(DWORD wParam)
+{
+	TaskInfo *taskinfo = (TaskInfo*)wParam;
+	if(taskinfo)
+	{
+		taskinfo->task(taskinfo->param);
+		// 返回到界面
+		if(taskinfo->thread)
+		{
+			PostPaskAsync(taskinfo->thread, taskinfo->ret, 0, NULL, 0);
+		}
+		delete taskinfo;
+	}
+}
+
 void CThread::OnIdle(int idlecount)
 {
 }
@@ -104,7 +122,7 @@ DWORD CThread::OnThreadExit()
 
 void CThread::ExitThread(DWORD dwCode, BOOL bAsync)
 {
-	PostThreadMessage(WM_QUIT, 0, 0);
+	::PostThreadMessage(m_nThreadID, WM_QUIT, 0, 0);
 }
 
 void CThread::OnPreTranslateMessage(MSG* pMsg)
@@ -121,11 +139,6 @@ DWORD CThread::SuspendThread()
 	return ::SuspendThread(m_hThread);
 }
 
-BOOL CThread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
-{
-	return ::PostThreadMessage(m_nThreadID, message, wParam, lParam);
-}
-
 HANDLE CThread::GetHandle()
 {
 	return m_hThread;
@@ -134,4 +147,14 @@ HANDLE CThread::GetHandle()
 DWORD CThread::GetThreadId()
 {
 	return m_nThreadID;
+}
+
+void PostPaskAsync(DWORD proc, std::function<void(DWORD)> task, DWORD param, std::function<void(DWORD)> ret, DWORD threadret)
+{
+	TaskInfo *taskinfo = new TaskInfo;
+	taskinfo->task = task;
+	taskinfo->param = param;
+	taskinfo->ret = ret;
+	taskinfo->thread = threadret;
+	::PostThreadMessage(proc, WM_USER + 1001, (DWORD)taskinfo, 0);
 }

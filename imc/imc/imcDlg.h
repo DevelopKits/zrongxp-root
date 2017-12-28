@@ -38,6 +38,7 @@ public:
 	afx_msg void OnBnClickedButton1();
 public:
 	void proc(imageinfo &info, int pos, int size);
+	void func(DWORD pm);
 	CProgressCtrl m_proc;
 	CButton m_start;
 	CEdit m_folder;

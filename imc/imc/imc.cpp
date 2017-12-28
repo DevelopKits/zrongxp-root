@@ -34,9 +34,6 @@ CimcApp::CimcApp()
 
 CimcApp theApp;
 
-
-// CimcApp 初始化
-
 BOOL CimcApp::InitInstance()
 {
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
@@ -115,5 +112,24 @@ BOOL CimcApp::PreTranslateMessage(MSG* pMsg)
 		dlg->proc(info->info, info->pos, info->size);
 		delete info;
 	}
+	else if (pMsg->message == WM_USER + 1001)
+	{
+		RunTask(pMsg->wParam);
+	}
 	return CWinApp::PreTranslateMessage(pMsg);
+}
+
+void CimcApp::RunTask(DWORD wParam)
+{
+	TaskInfo *taskinfo = (TaskInfo*)wParam;
+	if (taskinfo)
+	{
+		taskinfo->task(taskinfo->param);
+		// 返回到界面
+		if (taskinfo->thread)
+		{
+			PostPaskAsync(taskinfo->thread, taskinfo->ret, 0, NULL, 0);
+		}
+		delete taskinfo;
+	}
 }

@@ -23,9 +23,7 @@ public:
 // ÷ÿ–¥
 public:
 	virtual BOOL InitInstance();
-
-//  µœ÷
-
+	void RunTask(DWORD wParam);
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

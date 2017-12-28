@@ -170,8 +170,12 @@ void CimcDlg::proc(imageinfo &info, int pos, int size)
 		// 文件已经转化好了
 		CString str;
 		m_folder.GetWindowText(str);
-		MessageBox(L"文件转化好了：\n" + str + L"\\convert_out.png", 0, 0);
+		//MessageBox(L"文件转化好了：\n" + str + L"\\convert_out.png", 0, 0);
 	}
+}
+
+void CimcDlg::func(DWORD pm)
+{
 }
 
 void CimcDlg::OnBnClickedButton1()
@@ -184,8 +188,10 @@ void CimcDlg::OnBnClickedButton1()
 	}
 	m_start.EnableWindow(FALSE);
 	// 启动线程并执行
+	taskparam *param = new taskparam;
+	param->filepath = str;
+	param->uithread = ::GetCurrentThreadId();
 	CThread *Thread = new CThread;
-	Thread->m_uiThreadID = ::GetCurrentThreadId();
-	Thread->m_strFolder = str;
 	Thread->CreateThread();
+	PostPaskAsync(Thread->GetThreadId(), task, (DWORD)param, std::bind(&CimcDlg::func, this, std::placeholders::_1), ::GetCurrentThreadId());
 }

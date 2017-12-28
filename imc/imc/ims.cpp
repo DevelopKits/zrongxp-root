@@ -133,6 +133,17 @@ void SaveFile(Bitmap &bmp, LPCWSTR filepath, LPCWSTR type)
 	GetEncoderClsid(type, &cls);
 	bmp.Save(filepath, &cls);
 }
+// 
+void task(DWORD param)
+{
+	taskparam *pm = (taskparam*)param;
+	if (pm)
+	{
+		convert(pm->filepath, pm->uithread);
+		delete pm;
+	}
+}
+
 // 开始转化
 int convert(LPCWSTR filepath, DWORD uithread)
 {
@@ -153,7 +164,7 @@ int convert(LPCWSTR filepath, DWORD uithread)
 		info->info = it->second;
 		info->pos = i;
 		info->size = datas.size();
-		PostThreadMessage(uithread, WM_USER + 1000, (WPARAM)info, 0);
+		::PostThreadMessage(uithread, WM_USER + 1000, (WPARAM)info, 0);
 		FindRect(it->second, rc, used);
 		i++;
 	}
