@@ -163,14 +163,6 @@ HCURSOR CimcDlg::OnQueryDragIcon()
 void CimcDlg::proc(imageinfo &info, int pos, int size)
 {
 	m_proc.SetPos(pos * 100 / size);
-	if (pos == size)
-	{
-		m_start.EnableWindow(TRUE);
-		// 文件已经转化好了
-		CString str;
-		m_folder.GetWindowText(str);
-		//MessageBox(L"文件转化好了：\n" + str + L"\\convert_out.png", 0, 0);
-	}
 }
 
 void CimcDlg::func(TaskInfo *pm)
