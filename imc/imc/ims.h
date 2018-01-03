@@ -38,7 +38,9 @@ struct taskparam
 	CString filepath;
 	// 主线程
 	DWORD uithread;
+	// 宽度
+	int width;
 };
-
-extern void task(DWORD param);
-extern int convert(LPCWSTR filepath, DWORD uithread);
+struct TaskInfo;
+extern void task(TaskInfo *param);
+extern int convert(LPCWSTR filepath, DWORD uithread, int width, CString &error);

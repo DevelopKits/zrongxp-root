@@ -88,14 +88,16 @@ public:
 struct TaskInfo
 {
 	// 执行任务函数
-	std::function<void(DWORD)> task;
+	std::function<void(TaskInfo*)> task;
 	// 任务参数
 	DWORD param;
 	// 回调线程
 	DWORD thread;
 	// 回调函数
-	std::function<void(DWORD)> ret;
+	std::function<void(TaskInfo*)> ret;
+	// 出错信息
+	CString error;
 };
 
 // 执行异步任务
-extern void PostPaskAsync(DWORD proc, std::function<void(DWORD)> task, DWORD param, std::function<void(DWORD)> ret, DWORD threadret);
+extern void PostPaskAsync(DWORD proc, std::function<void(TaskInfo*)> task, DWORD param, std::function<void(TaskInfo*)> ret, DWORD threadret, LPCWSTR error);

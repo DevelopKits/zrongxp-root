@@ -124,11 +124,11 @@ void CimcApp::RunTask(DWORD wParam)
 	TaskInfo *taskinfo = (TaskInfo*)wParam;
 	if (taskinfo)
 	{
-		taskinfo->task(taskinfo->param);
+		taskinfo->task(taskinfo);
 		// 返回到界面
 		if (taskinfo->thread)
 		{
-			PostPaskAsync(taskinfo->thread, taskinfo->ret, 0, NULL, 0);
+			PostPaskAsync(taskinfo->thread, taskinfo->ret, 0, NULL, 0, L"");
 		}
 		delete taskinfo;
 	}

@@ -62,9 +62,7 @@ void CimcDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PROGRESS1, m_proc);
 	DDX_Control(pDX, IDC_BUTTON1, m_start);
 	DDX_Control(pDX, IDC_EDIT1, m_folder);
-	DDX_Control(pDX, IDC_EDIT2, m_out);
 	DDX_Control(pDX, IDC_EDIT3, m_width);
-	DDX_Control(pDX, IDC_EDIT4, m_height);
 }
 
 BEGIN_MESSAGE_MAP(CimcDlg, CDialogEx)
@@ -106,6 +104,7 @@ BOOL CimcDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);
 	m_proc.SetRange(0, 100);
+	m_width.SetWindowText(L"2048");
 #ifdef _DEBUG
 	m_folder.SetWindowTextW(L"C:\\Program Files (x86)\\IQIYI Video\\LStyle\\6.0.46.4598\\QYAppPlugin\\qixiu\\skin\\emoticon");
 #endif
@@ -174,12 +173,25 @@ void CimcDlg::proc(imageinfo &info, int pos, int size)
 	}
 }
 
-void CimcDlg::func(DWORD pm)
+void CimcDlg::func(TaskInfo *pm)
 {
+	// 文件目录
+	CString str;
+	m_folder.GetWindowText(str);
+	if (str.IsEmpty())
+	{
+		return;
+	}
+	if(pm->error.IsEmpty())
+		MessageBox(L"文件生成\n" + str + L"\\convert_out.png");
+	else
+		MessageBox(L"文件生成失败\n" + pm->error);
+	m_start.EnableWindow(TRUE);
 }
 
 void CimcDlg::OnBnClickedButton1()
 {
+	// 文件目录
 	CString str;
 	m_folder.GetWindowText(str);
 	if (str.IsEmpty())
@@ -187,11 +199,17 @@ void CimcDlg::OnBnClickedButton1()
 		return;
 	}
 	m_start.EnableWindow(FALSE);
+	// 图片宽度输出
+	CString strWidth;
+	m_width.GetWindowText(strWidth);
+	// 设置当前进度
+	m_proc.SetPos(0);
 	// 启动线程并执行
 	taskparam *param = new taskparam;
 	param->filepath = str;
 	param->uithread = ::GetCurrentThreadId();
+	param->width = _wtoi(strWidth);
 	CThread *Thread = new CThread;
 	Thread->CreateThread();
-	PostPaskAsync(Thread->GetThreadId(), task, (DWORD)param, std::bind(&CimcDlg::func, this, std::placeholders::_1), ::GetCurrentThreadId());
+	PostPaskAsync(Thread->GetThreadId(), task, (DWORD)param, std::bind(&CimcDlg::func, this, std::placeholders::_1), ::GetCurrentThreadId(), L"");
 }

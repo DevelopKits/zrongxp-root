@@ -3,11 +3,10 @@
 
 #include "stdafx.h"
 #include "ims.h"
+#include "Thread.h"
 using namespace Gdiplus;
 using namespace std;
 
-#define WIDTH 1024
-#define HEIGHT 2048
 // 返回GDI+的
 void GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
 {
@@ -85,7 +84,7 @@ void SearchFiles(const CString &szPathx, std::multimap<int, imageinfo> &datas)
 BOOL IntersectRects(std::vector<imagelayoutinfo> &used, RECT &rc)
 {
 	RECT t;
-	for (int i = 0; i < used.size(); i++)
+	for (int i = 0; i < (int)used.size(); i++)
 	{
 		if (::IntersectRect(&t, &rc, &used[i].rect))
 		{
@@ -95,35 +94,48 @@ BOOL IntersectRects(std::vector<imagelayoutinfo> &used, RECT &rc)
 	return FALSE;
 }
 // 返回图片该图片存放的位置 
-BOOL FindRect(imageinfo &info, RECT &out, std::vector<imagelayoutinfo> &used)
+BOOL FindRect(imageinfo &info, RECT &out, std::vector<imagelayoutinfo> &used, int width, int &maxheight, CString &error)
 {
 	// 最大的容器
 	RECT rc;
 	imagelayoutinfo layout;
-	for (int y = 0; y < HEIGHT; y++)
+	for (int y = 0; ; y++)
 	{
-		for (int x = 0; x < WIDTH; x++)
+		for (int x = 0; x < width; x++)
 		{
 			rc.left = x;
 			rc.top = y;
 			rc.right = rc.left + info.width + 2;
 			rc.bottom = rc.top + info.height + 2;
 			// 图片的宽度超标了
-			if (rc.right > WIDTH)
+			if (info.width + 2 > width)
+			{
+				error = L"图片的宽度超出限定值了\n" + info.file;
+				return FALSE;
+			}
+			// 需要换一行
+			if (rc.right > width)
 			{
 				break;
 			}
+			// 检查图片区域
 			if (!IntersectRects(used, rc))
 			{
 				out = rc;
 				layout.file = info.file;
 				layout.rect = rc;
 				used.push_back(layout);
+				// 记录最大高度
+				if (rc.bottom > maxheight)
+				{
+					maxheight = rc.bottom;
+				}
 				return TRUE;
 			}
 		}
 	}
 	// 没有空间了
+	error = L"没有空间了";
 	return FALSE;
 }
 // 保存文件
@@ -134,18 +146,18 @@ void SaveFile(Bitmap &bmp, LPCWSTR filepath, LPCWSTR type)
 	bmp.Save(filepath, &cls);
 }
 // 
-void task(DWORD param)
+void task(TaskInfo *param)
 {
-	taskparam *pm = (taskparam*)param;
+	taskparam *pm = (taskparam*)param->param;
 	if (pm)
 	{
-		convert(pm->filepath, pm->uithread);
+		convert(pm->filepath, pm->uithread, pm->width, param->error);
 		delete pm;
 	}
 }
 
 // 开始转化
-int convert(LPCWSTR filepath, DWORD uithread)
+BOOL convert(LPCWSTR filepath, DWORD uithread, int width, CString &error)
 {
 	// 初始化GDI+
 	GdiplusStartupInput myGdiplusStartupInput;
@@ -158,6 +170,7 @@ int convert(LPCWSTR filepath, DWORD uithread)
 	RECT rc;
 	std::vector<imagelayoutinfo> used;
 	int i = 1;
+	int maxheight = 0;
 	for (std::multimap<int, imageinfo>::iterator it = datas.begin(); it != datas.end(); it++)
 	{
 		posinfo *info = new posinfo;
@@ -165,18 +178,21 @@ int convert(LPCWSTR filepath, DWORD uithread)
 		info->pos = i;
 		info->size = datas.size();
 		::PostThreadMessage(uithread, WM_USER + 1000, (WPARAM)info, 0);
-		FindRect(it->second, rc, used);
+		if (!FindRect(it->second, rc, used, width, maxheight, error))
+		{
+			return FALSE;
+		}
 		i++;
 	}
 	// 保存文件
-	Bitmap bmp(WIDTH, HEIGHT);
+	Bitmap bmp(width, maxheight);
 	Graphics gs(&bmp);
-	for (int i = 0; i < used.size(); i++)
+	for (int i = 0; i < (int)used.size(); i++)
 	{
 		imagelayoutinfo &info = used[i];
 		Bitmap bs(filepath + CString(L"\\") + info.file);
 		gs.DrawImage(&bs, info.rect.left + 1, info.rect.top + 1, info.rect.right - info.rect.left - 2, info.rect.bottom - info.rect.top - 2);
 	}
 	SaveFile(bmp, filepath + CString(L"\\convert_out.png"), L"image/png");
-	return 0;
+	return TRUE;
 }

@@ -33,6 +33,7 @@ UINT WINAPI xThreadEntry(void *pData)
 
 	// 线程退出
 	DWORD code = pThread->OnThreadExit();
+	delete pThread;
 	::_endthreadex(code);
 	return 0x1111;
 }
@@ -77,6 +78,7 @@ void CThread::OnThreadRun()
 			if (msg.message == WM_USER + 1001)
 			{
 				RunTask(msg.wParam);
+				::PostThreadMessage(m_nThreadID, WM_QUIT, 0, 0);
 			}
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -101,11 +103,11 @@ void CThread::RunTask(DWORD wParam)
 	TaskInfo *taskinfo = (TaskInfo*)wParam;
 	if(taskinfo)
 	{
-		taskinfo->task(taskinfo->param);
+		taskinfo->task(taskinfo);
 		// 返回到界面
 		if(taskinfo->thread)
 		{
-			PostPaskAsync(taskinfo->thread, taskinfo->ret, 0, NULL, 0);
+			PostPaskAsync(taskinfo->thread, taskinfo->ret, 0, NULL, 0, taskinfo->error);
 		}
 		delete taskinfo;
 	}
@@ -149,12 +151,13 @@ DWORD CThread::GetThreadId()
 	return m_nThreadID;
 }
 
-void PostPaskAsync(DWORD proc, std::function<void(DWORD)> task, DWORD param, std::function<void(DWORD)> ret, DWORD threadret)
+void PostPaskAsync(DWORD proc, std::function<void(TaskInfo*)> task, DWORD param, std::function<void(TaskInfo*)> ret, DWORD threadret, LPCWSTR error)
 {
 	TaskInfo *taskinfo = new TaskInfo;
 	taskinfo->task = task;
 	taskinfo->param = param;
 	taskinfo->ret = ret;
 	taskinfo->thread = threadret;
+	taskinfo->error = error;
 	::PostThreadMessage(proc, WM_USER + 1001, (DWORD)taskinfo, 0);
 }
