@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "ims.h"
 #include "Thread.h"
+#include "AtlFile.h"
+#include "atlconv.h"
 using namespace Gdiplus;
 using namespace std;
 
@@ -156,6 +158,55 @@ void task(TaskInfo *param)
 	}
 }
 
+static std::string UnicodeToUTF8(const std::wstring& str)
+{
+	char*     pElementText;
+	int    iTextLen;
+	// wide char to multi char
+	iTextLen = WideCharToMultiByte(CP_UTF8,
+		0,
+		str.c_str(),
+		-1,
+		NULL,
+		0,
+		NULL,
+		NULL);
+	pElementText = new char[iTextLen + 1];
+	memset((void*)pElementText, 0, sizeof(char) * (iTextLen + 1));
+	::WideCharToMultiByte(CP_UTF8,
+		0,
+		str.c_str(),
+		-1,
+		pElementText,
+		iTextLen,
+		NULL,
+		NULL);
+	std::string strText;
+	strText = pElementText;
+	delete[] pElementText;
+	return strText;
+}
+
+//// 分割以0位分隔符号的字符串
+//void SplitString(const wchar_t *szSplit, int len, std::vector<CString> &str) 
+//{
+//	int pos = 0;
+//	while (pos < len)
+//	{
+//		CString text = szSplit + pos;
+//		text.ReleaseBuffer();
+//		str.push_back(text);
+//		pos += text.GetLength() + 1;
+//	}
+//}
+
+//CString outfile = filepath + CString(L"\\convert_out.ini");
+//CString names;
+//int len = ::GetPrivateProfileSectionNames(names.GetBufferSetLength(2048), 2048, outfile);
+//names.ReleaseBuffer(len);
+//std::vector<CString> str;
+//SplitString(names, len, str);
+
 // 开始转化
 BOOL convert(LPCWSTR filepath, DWORD uithread, int width, CString &error)
 {
@@ -194,5 +245,15 @@ BOOL convert(LPCWSTR filepath, DWORD uithread, int width, CString &error)
 		gs.DrawImage(&bs, info.rect.left + 1, info.rect.top + 1, info.rect.right - info.rect.left - 2, info.rect.bottom - info.rect.top - 2);
 	}
 	SaveFile(bmp, filepath + CString(L"\\convert_out.png"), L"image/png");
+	// 保存代码文件 convert_out.cpp
+	CString out, text;
+	for (int i = 0; i < (int)used.size(); i++)
+	{
+		imagelayoutinfo &info = used[i];
+		text.Format(L"|%s:%d,%d,%d,%d", info.file, info.rect.left, info.rect.top, info.rect.right, info.rect.bottom);
+		out += text;
+	} 
+	//
+	::WritePrivateProfileString(L"convert_out.png", L"file", out, filepath + CString(L"\\convert_out.ini"));
 	return TRUE;
 }
