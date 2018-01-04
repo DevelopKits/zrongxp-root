@@ -230,7 +230,7 @@ BOOL convert(LPCWSTR filepath, DWORD uithread, int width, CString &error)
 	for (int i = 0; i < (int)used.size(); i++)
 	{
 		imagelayoutinfo &info = used[i];
-		text.Format(L"|%s:%d,%d,%d,%d", info.file, info.rect.left, info.rect.top, info.rect.right, info.rect.bottom);
+		text.Format(L"|%s:%d,%d,%d,%d", info.file, info.rect.left + 1, info.rect.top + 1, info.rect.right - 1, info.rect.bottom - 1);
 		out += text;
 	} 
 	//
