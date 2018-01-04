@@ -187,26 +187,6 @@ static std::string UnicodeToUTF8(const std::wstring& str)
 	return strText;
 }
 
-//// 分割以0位分隔符号的字符串
-//void SplitString(const wchar_t *szSplit, int len, std::vector<CString> &str) 
-//{
-//	int pos = 0;
-//	while (pos < len)
-//	{
-//		CString text = szSplit + pos;
-//		text.ReleaseBuffer();
-//		str.push_back(text);
-//		pos += text.GetLength() + 1;
-//	}
-//}
-
-//CString outfile = filepath + CString(L"\\convert_out.ini");
-//CString names;
-//int len = ::GetPrivateProfileSectionNames(names.GetBufferSetLength(2048), 2048, outfile);
-//names.ReleaseBuffer(len);
-//std::vector<CString> str;
-//SplitString(names, len, str);
-
 // 开始转化
 BOOL convert(LPCWSTR filepath, DWORD uithread, int width, CString &error)
 {
